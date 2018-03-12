@@ -13,3 +13,7 @@
      lineinfile: path=/etc/fstab regexp=EOF line="{{item.line}}" state=present backup=yes
      with_items:
        - { line: 'EFS_server.IP:/   /efs      nfs4     nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0  '}
+
+
+#############
+use this script to mount EFS volume to remote servers including fstab entries
