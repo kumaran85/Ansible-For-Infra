@@ -8,7 +8,7 @@
    - name: install nfs-utils
      yum: name=nfs-utils state=latest
    - name: mount EFS
-     shell: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.65.15.189:/ /efs
+     shell: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 EFS_server.IP:/ /efs
    - name: Add user to sudo group
      lineinfile: path=/etc/fstab regexp=EOF line="{{item.line}}" state=present backup=yes
      with_items:
