@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  connection: local
+#  become: yes
+ # become_method: sudo
+  remote_user: root
+  tasks:
+#   - name: Create SACM user
+ #    user: name=sacmlinux shell=/bin/bash createhome=yes groups=ssh 
+  # - name: Set ! in shadow
+  #   shell: usermod -p! sacmlinux
+  # - name: make .ssh dir
+  #   file: path=/home/sacmlinux/.ssh state=directory owner=sacmlinux group=sacmlinux
+  # - name: Copy Files
+  #   copy: src=/root/playbook/authorized_keys dest=/home/sacmlinux/.ssh/ owner=sacmlinux group=sacmlinux
+#   - name: Install dmidecode
+ #    yum: name=dmidecode state=latest
+   #- name: Add SUDO info
+   #  lineinfile: path=/etc/sudoers line="{{item.line}}" state=present backup=yes validate='/usr/sbin/visudo -cf %s'
+   #  with_items:
+  #    - { line: 'sacmlinux ALL=(root) NOPASSWD: /sbin/dmidecode, /sbin/lsof, /sbin/fdisk -l, /sbin/dmsetup table, /sbin/multipath -ll' }
+ #    when:
+#      - ( ansible_distribution == "RedHat"  and  ansible_distribution_major_version == "6")
+
+   - name: Add SUDO info
+     lineinfile: path=/etc/sudoers line="{{item.line}}" state=present backup=yes validate='/usr/sbin/visudo -cf %s'
+     with_items:
+      - { line: 'sacmlinux ALL=(root) NOPASSWD: /usr/sbin/dmidecode, /sbin/lsof, /sbin/fdisk -l, /sbin/dmsetup table, /sbin/multipath -ll' }
+     when:
+      - (ansible_distribution == "Amazon" or ansible_distribution == "SLES") or 
+        (ansible_distribution == "Redhat" and ansible_distribution_major_version == "6")
