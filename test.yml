@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  connection: local
+  tasks: 
+   - name: install
+     user: name={{item}} shell=/bin/bash state=absent
+     with_list:
+      - philips

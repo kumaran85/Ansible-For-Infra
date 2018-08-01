@@ -1,0 +1,10 @@
+---
+- hosts: ttt
+  become: yes
+  remote_user: ec2-user
+  tasks:
+   - name: include vars
+     include_vars: file="pinguser.yml"
+   - name: create user
+     user: name="{{item.key}}" password="{{item.value}}" shell="/bin/bash" update_password=on_create groups=ssh
+     with_dict: "{{ user_passwords }}"

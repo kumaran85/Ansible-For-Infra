@@ -1,0 +1,19 @@
+---
+- hosts: ttt 
+  become: yes
+  remote_user: ec2-user
+  gather_facts: false
+  tasks:
+   - name: Download OpenSSL
+     get_url: url=https://github.com/openssl/openssl/archive/OpenSSL_1_1_0g.tar.gz dest=/home/ec2-user/
+
+   - name: Download Apr
+     get_url: url=https://github.com/apache/apr/archive/1.6.3.tar.gz dest=/home/ec2-user/
+ 
+   - name: Download Apr-Utils
+     get_url: url=https://github.com/apache/apr-util/archive/1.6.1.tar.gz dest=/home/ec2-user/
+ 
+   - name: Download Apache
+     get_url: url=https://github.com/apache/httpd/archive/2.4.33.tar.gz dest=/home/ec2-user/
+ 
+ 

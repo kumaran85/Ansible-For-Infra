@@ -1,0 +1,7 @@
+---
+- hosts: ttt
+  become: yes
+  remote_user: admin
+  tasks:
+   - name: install
+     apt: name=curl state=latest
