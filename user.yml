@@ -1,5 +1,5 @@
 ---
-- hosts: ttt
+- hosts: ttt1
   become: yes
   remote_user: ec2-user
   tasks:
