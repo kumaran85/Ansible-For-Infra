@@ -1,0 +1,11 @@
+---
+- hosts: mine
+  become: yes
+  remote_user: ec2-user
+  gather_facts: false
+  tasks:
+   - name: Give root Access
+     lineinfile: path=/etc/sudoers insertafter=EOF line="{{item}}" validate='/usr/sbin/visudo -cf %s' backup=yes state=present
+     loop: 
+      - 'ccuser ALL=(ALL)  PASSWD: ALL'
+#This is used in Ansible 2.6  and later 
