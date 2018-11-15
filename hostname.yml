@@ -1,0 +1,12 @@
+---
+- hosts: gg
+  become: yes
+  remote_user: ku290295
+  tasks:
+   - name: change hostname in RHEL 7
+     shell: hostname {{inventory_hostname}}
+#     register: hai
+ #  - debug: var=hai
+   - name: Modify hostname file
+     shell: hostname > /etc/hostname
+  

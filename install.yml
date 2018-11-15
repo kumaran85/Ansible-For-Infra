@@ -1,0 +1,14 @@
+---
+- import_playbook: web.yml
+- import_playbook: download.yml
+- import_playbook: untar.yml
+- hosts: ttt
+  become: yes
+  remote_user: ec2-user
+  gather_facts: false
+  tasks:
+   - name: Copy script files 
+     copy: src=/home/ku290295/git/allinone.sh  dest=/home/ec2-user/ owner=root group=root mode=0755
+   - name: Exec script
+     shell: sh  /home/ec2-user/allinone.sh
+     

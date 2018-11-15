@@ -1,0 +1,11 @@
+---
+- hosts: ttt
+  become: yes
+  remote_user: ec2-user
+  tasks:
+   - name: Copy files
+     copy: src=/home/ku290295/git/cfg2html-1.79-1.el7.rf.noarch.rpm dest=/home/ec2-user/ owner=root group=root
+   - name: Install rpm
+     shell: rpm -ivh /home/ec2-user/cfg2html-1.79-1.el7.rf.noarch.rpm
+   - name: install command 
+     shell: cfg2html-linux

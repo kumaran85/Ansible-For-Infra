@@ -1,0 +1,9 @@
+---
+- hosts: pingfednew
+  become: yes
+  remote_user: ec2-user
+  tasks:
+   - name: copy file
+     copy: src="chrony.conf" dest=/etc/chrony.conf owner=root group=root mode=0644
+   - name: start chronyd service 
+     systemd: name=chronyd enabled=yes state=started
