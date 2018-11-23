@@ -1,5 +1,5 @@
 ---
-- hosts:
+- hosts: test
   become: ec2-user
   become_method: sudo
   remote_user: ec2-user
