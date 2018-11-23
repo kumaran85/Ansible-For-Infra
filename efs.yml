@@ -16,4 +16,4 @@
 
 
 #############
-use this script to mount EFS volume to remote servers including fstab entries
+use this script to mount EFS volume to remote servers including fstab.
