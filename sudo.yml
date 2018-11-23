@@ -11,3 +11,5 @@
      with_items:
        - { line: '{{input}} ALL=(ALL) PASSWD: ALL '}
 
+# Exec as ansible-playbook sudo.yml -e input=ku290295
+#It will give root access to user ku290295.
