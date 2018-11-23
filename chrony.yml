@@ -1,5 +1,5 @@
 ---
-- hosts: pingfednew
+- hosts: ping
   become: yes
   remote_user: ec2-user
   tasks:
@@ -7,3 +7,4 @@
      copy: src="chrony.conf" dest=/etc/chrony.conf owner=root group=root mode=0644
    - name: start chronyd service 
      systemd: name=chronyd enabled=yes state=started
+#copy after configring chronyc to servers.
