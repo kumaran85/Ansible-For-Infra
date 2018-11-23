@@ -1,0 +1,8 @@
+---
+- hosts: again
+  become: yes
+  remote_user: ec2-user
+  gather_facts: false
+  tasks:
+   - name: Remove ccuser from root
+     lineinfile: path=/etc/sudoers regexp=^ccuser line="" validate='/usr/sbin/visudo -cf %s' backup=yes state=present
