@@ -32,3 +32,4 @@
      with_items:
       - { line: 'sacmlinux ALL=(root) NOPASSWD: /sbin/dmidecode, /sbin/lsof, /sbin/fdisk -l, /sbin/dmsetup table, /sbin/multipath -ll' }
      tags: red7
+Based on OS Adding users
