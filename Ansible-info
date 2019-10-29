@@ -1,0 +1,140 @@
+openssl passwd -1 passwd    encrypt passwd:X$br2ru*adRa
+
+To genarate  hash password: python -c 'import crypt,getpass; print crypt.crypt(getpass.getpass())'
+
+Disable Hostkeychecking in ansible.cfg as False.
+
+when you use ansible envirnment variable never set as gather_facts false. That will give error.
+
+Execute playbook locally: ansible-playbook ssh.yml --connection=local.
+
+handlers execute at the end of play.
+##################################################
+Before running check as a test without installing it ansible-playbook yum.yml --check.
+ansible-playbook test.yml --step (install step by step ) y -> yes c-> continue for all tasks n -> no to skip one tasks
+To execute task even in check mode use always_run as true.
+
+when using sudo use become and method, remote_user. Execute as ansible-playbook name.yml -K (To prompt SUDO password)
+
+Send the reboot command with the command module, and specify async: 0, poll: 0, and ignore_errors: true, followed by a wait_for task with a delay.
+
+ansible-playbook test.yml -a " " to pass arguments
+###################################
+ansible managing in paralley
+serial key to apply task to first number of servers like to giving preferences serial:3 applying to first 3 servers.
+
+max_fail_percentage to abort playbook excution when certain threshhold of failures in hosts occured.
+##################################################
+
+copy local dir  to remote
+copy: src=./config/ dest=/etc/myapp so entire dir below .config will be /etc/myapp
+
+#############################
+lookup variable 
+
+ansible-doc -t lookup -l
+
+#########################################################
+
+Defining Group varibales
+[domain]
+lab.example.com
+it.example.com
+[domain:vars]
+user=ec2-user
+
+To limit gathering facts use filter.
+ansible-playbook test.yml -a "filter=ansible_eth0"
+###############################
+Playbook execution method
+1. ansible-playbook rpm.yml -k ( root password of remote server)
+2. ansible-playbook rpm.yml  ( Mention pem key in ansible.cfg file)
+3. ansible-playbook rpm.yml -su --su-user=ansib -u ansib (for sudo ID)
+4. ansible-playbook rpm.yml -k (become=yes and remote_user=ku290295)
+###############################
+If selinux enabled libselinux-python should be installed.
+
+ansible-doc file -> to list module options 
+Execute commands on all servers:
+ansible route -a 'reboot' -k
+
+Facts: Collecting information about system info to configure.
+#####################################################################################
+Change Forks in ansible.cfg to higher. Ansible executing quickly on 100 hosts 
+
+create file on all hosts: ansible prod -a "touch /home/hai mode=600 owner=anand group=wheel"
+
+ansible prod -m copy -a "src=/etc/hosts dest=/tmp/"
+
+ansible prod -m file -a "dest=/etc/passwd mode=600 owner=root group=root"
+#####################################################################################
+delete file: ansible prod -m file -a "dest=/tmp/file state=absent"
+
+ansible prod -m yum -a "name=nfs-kernel-server state=present" or state=latest (Update) state=absent 
+
+ansible-playbook route.yml --list-hosts or ansible route --list-host
+
+ansible variable should start with chars and Underscore user_name, root_pass. 
+##################################################################################
+
+ansible-playbook test.yml --limit "host1,host2"   limit playbook exec to limited hosts.
+ansible-playbook test.yml --tags 'install','red' or ansible-playbook test.yml  --skip-tags "2.2.17" --skip-tags  "2.2.21"
+mention var name in bracket notation "{{ root_pass}}"
+####################################################
+File separation to keep sensitive info using vars_files
+ vars_files:
+  - /var/external_vars.yml
+########################################################
+"ansible_distribution": "SLES",
+        "ansible_distribution_major_version": "11",
+        "ansible_distribution_release": "0",
+        "ansible_distribution_version": 11.4
+
+##############################################
+Executing commands even if result  failed like one execution failed on one server but second command not executing use below example
+
+- command: route -n
+  register: result
+  ignore_errors: True 
+- command: touch file
+  when: result | succeeded  or when: result | failed
+#######################################################
+Proxy using:
+
+environment:
+ http_Proxy: http:proxy.example.com:8080
+
+Ignoring failed commands
+command: ip r a 
+ignore_errors: yes
+
+######################################
+Using Vault Secure sensitive file
+ansible-vault encrypt rpm.yml -> Encrypt it 
+ansible-vault edit rpm.yml -> Without decrypt edit 
+ansible-vault decrypt rpm.yml --ask-vault-pass  -> Decrypt it
+ansible-vault rekey  rpm.yml   --ask-vault-pass
+
+###########################################
+AWS environment 
+ansible route -a " cat /etc/issue.net "  --private-key=/home/ec2-user/OAM_key.pem -su --su-user=ec2-user -u ec2-user
+###########################################
+aws copy file
+ansible route -m copy -a " src=/home/ec2-user/book/sshd_config dest=/etc/ssh/sshd_config mode=0600 owner=root " --private-key=/home/ec2-user/OAM_key.pem -su --su-user=ec2-user -u ec2-user
+ansible route -m copy -a " src=/home/ec2-user/book/sshd_config dest=/etc/ssh/sshd_config mode=0600 owner=root " --private-key=/home/ec2-user/OAM_key.pem  --su-user=ec2-user
+
+#############################
+
+winrm enumerate winrm/comfig/listener Check both port is open?
+
+#########################
+import_playbook and include_playbook
+include_tasks and import_tasks
+import statements are pre-processed 
+inlude statements are processed at the time of playbook execution. while exec you can see msg as "included name.yml".
+
+##########################
+
+study ansible filters loops, jinja2 tests 
+
+
