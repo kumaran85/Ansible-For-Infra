@@ -5,4 +5,5 @@
    - name: install
      user: name={{item}} shell=/bin/bash state=absent
      with_list:
-      - philips
+      - ku290295
+
