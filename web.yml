@@ -4,12 +4,6 @@
   remote_user: ec2-user
   gather_facts: false
   tasks:
-#   - name: Copy EPEL RPM
- #    copy: src=/home/ku290295/epel-release-latest-7.noarch.rpm dest=/home/ec2-user/
-  #   tags: one
-  # - name: Install EPEL RPM
-   #  shell: rpm -ivh /home/ec2-user/epel-release-latest-7.noarch.rpm
-    # tags: second
    - name: Download files
      yum: name={{item}} state=latest
      tags: three
